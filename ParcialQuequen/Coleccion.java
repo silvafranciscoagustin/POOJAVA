@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Coleccion extends ElementoColeccionable {
     protected ArrayList<ElementoColeccionable> elementos;
+    private static final double PORCENTAJE_EXTRA = 0.1;
 
     public Coleccion(String nombre) {
         super(nombre);
@@ -24,7 +25,11 @@ public class Coleccion extends ElementoColeccionable {
     public double getVolumen() {
         double total = 0;
         for(ElementoColeccionable ee: elementos){
-            total += ee.getVolumen();
+            if(ee.getValor()==1){
+                total += ee.getVolumen() + (ee.getVolumen() * PORCENTAJE_EXTRA);
+            }else {
+                ee.getVolumen();
+            }
         }
         return total;
     }
@@ -32,8 +37,11 @@ public class Coleccion extends ElementoColeccionable {
     @Override
     public ArrayList<String> getCaracteristicas() {
         ArrayList <String> caracteristicasSinRepetir = new ArrayList<>();
+
         for(ElementoColeccionable ee : elementos){
+
             ArrayList<String> caracteristicas = ee.getCaracteristicas();
+
             for (String caracteristica : caracteristicas){
                 if(!caracteristicasSinRepetir.contains(caracteristica)){
                     caracteristicasSinRepetir.add(caracteristica);
@@ -44,7 +52,18 @@ public class Coleccion extends ElementoColeccionable {
     }
 
     @Override
-    public double getCosto() {
+    public double getCosto(){
+        double total = 0;
+        for (ElementoColeccionable ee: elementos){
+            total+=ee.getCosto();
+        }
+        return total;
+    }
+
+
+
+    @Override
+    public int getValor() {
         return 0;
     }
 
